@@ -17,13 +17,49 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 $scope.filter = null
             });
     };
-
-    $scope.addToCart = function (id) {
-        $http.get(contextPath + '/cart/' + id)
+    $scope.loadCart = function () {
+        $http.get(contextPath + '/cart')
             .then(function (response) {
-                $scope.Cart = response.data;
+                $scope.cart = response.data;
             });
     }
 
+
+    $scope.addToCart = function (productId) {
+        $http.get(contextPath + '/cart/add/' + productId)
+            .then(function (response) {
+                $scope.loadCart();
+            });
+    }
+
+    $scope.deleteProduct = function (productId) {
+        $http.get(contextPath + '/cart/delete/' + productId)
+            .then(function (response) {
+                $scope.loadCart();
+            });
+    }
+
+    $scope.deleteAllFromCart = function () {
+        $http.get(contextPath + '/cart/delete')
+            .then(function (response) {
+                $scope.loadCart();
+            });
+    }
+
+    $scope.changeQuantity = function (productId, delta) {
+        $http({
+            url: contextPath + '/cart/change_quantity',
+            method: 'GET',
+            params: {
+                productId: productId,
+                delta: delta
+            }
+        }).then(function (response) {
+            $scope.loadCart();
+        });
+    }
+
     $scope.loadProducts();
+    $scope.loadCart();
+
 });

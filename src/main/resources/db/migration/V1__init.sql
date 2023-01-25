@@ -1,8 +1,10 @@
 create table products
 (
-    id          bigserial primary key,
-    title       VARCHAR(255),
-    price       DOUBLE
+    id         bigserial primary key,
+    title      VARCHAR(255),
+    price      DOUBLE,
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
 );
 insert into products (title, price)
 values ('Bread', 7.8),

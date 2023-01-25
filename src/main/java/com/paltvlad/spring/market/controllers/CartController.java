@@ -1,14 +1,12 @@
 package com.paltvlad.spring.market.controllers;
 
 
-
+import com.paltvlad.spring.market.dtos.Cart;
 import com.paltvlad.spring.market.dtos.ProductDto;
 import com.paltvlad.spring.market.services.CartService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,10 +17,31 @@ public class CartController {
 
     private final CartService cartService;
 
-    @GetMapping("/{id}")
-    public List<ProductDto> addToCart(@PathVariable Long id) {
+    @GetMapping("/add/{id}")
+    public void addToCart(@PathVariable Long id) {
+        cartService.addToCard(id);
+    }
 
+    @GetMapping
+    public Cart getCurrentCart(){
+        return cartService.getCurrentCart();
+    }
 
-        return cartService.addToCard(id);
+    @GetMapping("/delete/{id}")
+    public void deleteById(@PathVariable Long id) {
+
+        cartService.deleteById(id);
+    }
+
+    @GetMapping("/delete")
+    public void deleteAllFromCart() {
+
+        cartService.deleteAllFromCart();
+    }
+
+    @GetMapping("/change_quantity")
+    public void changePrice(@RequestParam Long productId, @RequestParam Integer delta) {
+
+        cartService.changeQuantity(productId, delta);
     }
 }

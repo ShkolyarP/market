@@ -22,16 +22,6 @@ public class ProductDto {
 
 
 
-    private int amount = 1;
-    private double sum;
-
-    public ProductDto(Long id, String title, double price) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,5 +1,7 @@
-package com.paltvlad.spring.market.dtos;
+package com.paltvlad.spring.market.models;
 
+import com.paltvlad.spring.market.aop.MeasureExecutionTime;
+import com.paltvlad.spring.market.dtos.ProductDto;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -32,40 +34,36 @@ public class Cart {
         }
     }
 
+    @MeasureExecutionTime
     public void addToCart(ProductDto productDto) {
-
-        boolean finding = false;
 
         for (CartItem item :
                 items) {
             if (item.getProductId().equals(productDto.getId())) {
-                item.setQuantity(item.getQuantity() + 1);
-                item.setPrice(item.getPricePerProduct() * item.getQuantity());
-                finding = true;
+                item.changeQuantity(1);
+                recalculate();
+                return;
             }
         }
 
-
-        if (!finding) {
-            items.add(new CartItem(productDto.getId(), productDto.getTitle(), 1, productDto.getPrice(), productDto.getPrice()));
-        }
+        items.add(new CartItem(productDto.getId(), productDto.getTitle(), 1, productDto.getPrice(), productDto.getPrice()));
 
         recalculate();
 
     }
 
-    public CartItem findById(Long id){
+    public CartItem findById(Long id) {
         return items.stream().filter(i -> i.getProductId().equals(id)).findFirst().get();
     }
 
     public void deleteById(Long id) {
-
-        items.removeIf((i -> i.getProductId().equals(id)));
-        recalculate();
+        if (items.removeIf((i -> i.getProductId().equals(id)))) {
+            recalculate();
+        }
     }
 
 
-    public void deleteAllFromCart() {
+    public void clearCart() {
         items.clear();
         recalculate();
     }

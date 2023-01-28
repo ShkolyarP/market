@@ -1,14 +1,10 @@
 package com.paltvlad.spring.market.controllers;
 
 
-import com.paltvlad.spring.market.dtos.Cart;
-import com.paltvlad.spring.market.dtos.ProductDto;
+import com.paltvlad.spring.market.models.Cart;
 import com.paltvlad.spring.market.services.CartService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,14 +23,14 @@ public class CartController {
         return cartService.getCurrentCart();
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/remove/{id}")
     public void deleteById(@PathVariable Long id) {
 
         cartService.deleteById(id);
     }
 
-    @GetMapping("/delete")
-    public void deleteAllFromCart() {
+    @GetMapping("/clear")
+    public void clearCart() {
 
         cartService.deleteAllFromCart();
     }

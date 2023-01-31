@@ -1,10 +1,11 @@
 package com.paltvlad.spring.market.services;
 
 
+import com.paltvlad.spring.market.aop.MeasureExecutionTime;
 import com.paltvlad.spring.market.converters.ProductConverter;
-import com.paltvlad.spring.market.dtos.CartItem;
+import com.paltvlad.spring.market.models.CartItem;
 import com.paltvlad.spring.market.dtos.ProductDto;
-import com.paltvlad.spring.market.dtos.Cart;
+import com.paltvlad.spring.market.models.Cart;
 import com.paltvlad.spring.market.entities.Product;
 import com.paltvlad.spring.market.exeptions.ResourceNotFoundException;
 import jakarta.annotation.PostConstruct;
@@ -35,14 +36,12 @@ public class CartService {
 
     }
 
-
+    @MeasureExecutionTime
     public void changeQuantity(Long id, Integer delta) {
 
         CartItem item = tempCart.findById(id);
         if (!(item.getQuantity() == 1 && delta == -1)) {
-
-            item.setQuantity(item.getQuantity() + delta);
-            item.setPrice(item.getPrice() + item.getPricePerProduct() * delta);
+            item.changeQuantity(delta);
         }
         tempCart.recalculate();
     }
@@ -53,6 +52,6 @@ public class CartService {
     }
 
     public void deleteAllFromCart() {
-        tempCart.deleteAllFromCart();
+        tempCart.clearCart();
     }
 }

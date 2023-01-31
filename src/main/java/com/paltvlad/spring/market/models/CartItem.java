@@ -1,4 +1,4 @@
-package com.paltvlad.spring.market.dtos;
+package com.paltvlad.spring.market.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,4 +15,9 @@ public class CartItem {
     private int quantity;
     private double pricePerProduct;
     private double price;
+
+    public void changeQuantity(int delta) {
+        quantity += delta;
+        price = pricePerProduct * quantity;
+    }
 }

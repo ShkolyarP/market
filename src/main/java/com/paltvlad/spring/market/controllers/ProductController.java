@@ -1,7 +1,6 @@
 package com.paltvlad.spring.market.controllers;
 
 
-
 import com.paltvlad.spring.market.converters.ProductConverter;
 import com.paltvlad.spring.market.dtos.ProductDto;
 import com.paltvlad.spring.market.entities.Product;
@@ -12,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,15 +46,10 @@ public class ProductController {
 
 
     @PostMapping
-    public ProductDto saveNewProduct(@RequestBody ProductDto productDto) {
+    public ProductDto createNewProduct(@RequestBody ProductDto productDto) {
 
-        productValidator.validate(productDto);
-        Product product = productConverter.dtoToEntity(productDto);
-
-        product.setId(null);
-        product = productService.save(product);
+        Product product = productService.createNewProduct(productDto);
         return productConverter.EntityToDto(product);
-
     }
 
 

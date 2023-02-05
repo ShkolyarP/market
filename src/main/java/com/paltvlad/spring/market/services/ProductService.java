@@ -1,11 +1,13 @@
 package com.paltvlad.spring.market.services;
 
 
+import com.paltvlad.spring.market.converters.ProductConverter;
 import com.paltvlad.spring.market.dtos.ProductDto;
 import com.paltvlad.spring.market.entities.Product;
 import com.paltvlad.spring.market.exeptions.ResourceNotFoundException;
 import com.paltvlad.spring.market.repositories.ProductRepository;
 import com.paltvlad.spring.market.repositories.specifications.ProductsSpecifications;
+import com.paltvlad.spring.market.validators.ProductValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -22,6 +26,8 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductValidator productValidator;
+    private final ProductConverter productConverter;
 
 
     public Page<Product> findAll(Double minPrice, Double maxPrice, String partTitle, Integer page) {
@@ -66,8 +72,26 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public static final Function<Product, com.paltvlad.spring.market.soap.products.Product> functionEntityToSoap = product -> {
+        com.paltvlad.spring.market.soap.products.Product p = new com.paltvlad.spring.market.soap.products.Product();
+        p.setId(product.getId());
+        p.setTitle(product.getTitle());
+        p.setPrice(product.getPrice());
+        p.setCategoryTitle(product.getCategory().getTitle());
+        return p;
+    };
 
-    public Product save(Product product) {
+    public List<com.paltvlad.spring.market.soap.products.Product> getAllProductsSoap() {
+        return productRepository.findAll().stream().map(functionEntityToSoap).collect(Collectors.toList());
+    }
+
+
+    public Product createNewProduct(ProductDto productDto) {
+
+        productValidator.validate(productDto);
+        Product product = productConverter.dtoToEntity(productDto);
+        product.setId(null);
+
 
         return productRepository.save(product);
     }

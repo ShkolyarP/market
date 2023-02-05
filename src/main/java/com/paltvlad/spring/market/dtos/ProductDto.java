@@ -20,6 +20,8 @@ public class ProductDto {
 
     private double price;
 
+    private String categoryTitle;
+
 
 
     @Override

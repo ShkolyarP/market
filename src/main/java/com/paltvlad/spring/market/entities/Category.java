@@ -9,14 +9,15 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
-@Table(name = "products")
+@Table(name = "categories")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +25,8 @@ public class Product {
     private Long id;
     @Column(name = "title")
     private String title;
-    @Column(name = "price")
-    private double price;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -39,9 +36,5 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Product(Long id, String title, double price) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-    }
+
 }

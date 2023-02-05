@@ -25,33 +25,33 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 
 
     @Bean(name = "categories")
-    public DefaultWsdl11Definition groupsWsdl11Definition(XsdSchema groupsSchema) {
+    public DefaultWsdl11Definition categoriesWsdl11Definition(XsdSchema categoriesSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("CategoriesPort");
         wsdl11Definition.setLocationUri("/ws");
         wsdl11Definition.setTargetNamespace("http://www.paltvlad.com/spring/market/categories");
-        wsdl11Definition.setSchema(groupsSchema);
+        wsdl11Definition.setSchema(categoriesSchema);
         return wsdl11Definition;
     }
 
 
     @Bean(name = "products")
-    public DefaultWsdl11Definition studentsWsdl11Definition(XsdSchema studentsSchema) {
+    public DefaultWsdl11Definition productsWsdl11Definition(XsdSchema productsSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("ProductsPort");
         wsdl11Definition.setLocationUri("/ws");
         wsdl11Definition.setTargetNamespace("http://www.paltvlad.com/spring/market/products");
-        wsdl11Definition.setSchema(studentsSchema);
+        wsdl11Definition.setSchema(productsSchema);
         return wsdl11Definition;
     }
 
     @Bean
-    public XsdSchema groupsSchema() {
+    public XsdSchema categoriesSchema() {
         return new SimpleXsdSchema(new ClassPathResource("categories.xsd"));
     }
 
     @Bean
-    public XsdSchema studentsSchema() {
+    public XsdSchema productsSchema() {
         return new SimpleXsdSchema(new ClassPathResource("products.xsd"));
     }
 }

@@ -23,9 +23,9 @@ public class CategoryEndpoint {
           xmlns:f="http://www.paltvlad.com/spring/market/categories">
             <soapenv:Header/>
             <soapenv:Body>
-                <f:getGroupByTitleRequest>
+                <f:getCategoryByTitleRequest>
                     <f:title>Food</f:title>
-                </f:getGroupByTitleRequest>
+                </f:getCategoryByTitleRequest>
             </soapenv:Body>
         </soapenv:Envelope>
      */
@@ -33,7 +33,7 @@ public class CategoryEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getCategoryByTitleRequest")
     @ResponsePayload
     @Transactional
-    public GetCategoryByTitleResponse getGroupByTitle(@RequestPayload GetCategoryByTitleRequest request) {
+    public GetCategoryByTitleResponse getCategoryByTitle(@RequestPayload GetCategoryByTitleRequest request) {
         GetCategoryByTitleResponse response = new GetCategoryByTitleResponse();
         response.setCategory(categoryService.getByTitle(request.getTitle()));
         return response;

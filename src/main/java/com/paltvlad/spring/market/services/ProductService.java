@@ -81,7 +81,7 @@ public class ProductService {
         return p;
     };
 
-    public List<com.paltvlad.spring.market.soap.products.Product> getALlProductsSoap() {
+    public List<com.paltvlad.spring.market.soap.products.Product> getAllProductsSoap() {
         return productRepository.findAll().stream().map(functionEntityToSoap).collect(Collectors.toList());
     }
 

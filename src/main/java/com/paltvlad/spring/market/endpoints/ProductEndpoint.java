@@ -4,8 +4,6 @@ package com.paltvlad.spring.market.endpoints;
 import com.paltvlad.spring.market.services.ProductService;
 import com.paltvlad.spring.market.soap.products.GetAllProductsRequest;
 import com.paltvlad.spring.market.soap.products.GetAllProductsResponse;
-import com.paltvlad.spring.market.soap.products.GetProductByTitleRequest;
-import com.paltvlad.spring.market.soap.products.GetProductByTitleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -40,9 +38,9 @@ public class ProductEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllProductsRequest")
     @ResponsePayload
-    public GetAllProductsResponse getAllStudents(@RequestPayload GetAllProductsRequest request) {
+    public GetAllProductsResponse getAllProducts(@RequestPayload GetAllProductsRequest request) {
         GetAllProductsResponse response = new GetAllProductsResponse();
-        productService.getALlProductsSoap().forEach(response.getProducts()::add);
+        productService.getAllProductsSoap().forEach(response.getProducts()::add);
         return response;
     }
 }

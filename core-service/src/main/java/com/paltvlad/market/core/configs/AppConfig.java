@@ -27,7 +27,7 @@ public class AppConfig {
 
 
     @Bean
-    public WebClient productServiceWebClient() {
+    public WebClient cartServiceWebClient() {
         TcpClient tcpClient = TcpClient
                 .create()
                 .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, cartServiceIntegrationProperties.getConnectTimeout())

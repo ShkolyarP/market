@@ -1,10 +1,7 @@
 package com.paltvlad.market.core.integrations;
 
 import com.paltvlad.market.api.CartDto;
-import com.paltvlad.market.api.ProductDto;
-import com.paltvlad.market.api.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 

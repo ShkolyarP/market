@@ -17,7 +17,7 @@ public class CartConverter {
     public CartDto modelToDto(Cart cart){
 
         CartDto cartDto = new CartDto();
-        cartDto.setTotalPrice(cartDto.getTotalPrice());
+        cartDto.setTotalPrice(cart.getTotalPrice());
         cartDto.setItems(cart.getItems().stream().map(cartItemConverter::modelToDto).collect(Collectors.toList()));
 
         return cartDto;

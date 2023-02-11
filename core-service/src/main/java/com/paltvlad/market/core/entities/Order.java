@@ -1,12 +1,16 @@
 package com.paltvlad.market.core.entities;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+
+
 import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,9 +24,9 @@ public class Order {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
+    @JoinColumn(name = "username")
+    private String username;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
     private List<OrderItem> orderItem;
@@ -35,7 +39,7 @@ public class Order {
 
 
     @Column(name = "total_price")
-    private double totalPrice;
+    private BigDecimal totalPrice;
 
     @CreationTimestamp
     @Column(name = "created_at")

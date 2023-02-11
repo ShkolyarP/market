@@ -1,14 +1,16 @@
 package com.paltvlad.market.api;
 
 
+import java.math.BigDecimal;
+
 public class CartItemDto {
 
 
     private Long productId;
     private String productTitle;
     private int quantity;
-    private double pricePerProduct;
-    private double price;
+    private BigDecimal pricePerProduct;
+    private BigDecimal price;
 
 
     public Long getProductId() {
@@ -35,19 +37,19 @@ public class CartItemDto {
         this.quantity = quantity;
     }
 
-    public double getPricePerProduct() {
+    public BigDecimal getPricePerProduct() {
         return pricePerProduct;
     }
 
-    public void setPricePerProduct(double pricePerProduct) {
+    public void setPricePerProduct(BigDecimal pricePerProduct) {
         this.pricePerProduct = pricePerProduct;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

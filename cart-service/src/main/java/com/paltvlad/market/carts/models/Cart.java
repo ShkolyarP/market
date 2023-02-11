@@ -5,6 +5,8 @@ import com.paltvlad.market.api.ProductDto;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +18,7 @@ public class Cart {
 
     private List<CartItem> items;
 
-    private double totalPrice;
+    private BigDecimal totalPrice;
 
     public Cart() {
         this.items = new ArrayList<>();
@@ -28,9 +30,9 @@ public class Cart {
     }
 
     public void recalculate() {
-        totalPrice = 0;
+        totalPrice = BigDecimal.valueOf(0);
         for (CartItem item : items) {
-            totalPrice += item.getPrice();
+            totalPrice = totalPrice.add(item.getPrice()).setScale(2, BigDecimal.ROUND_HALF_UP);
         }
     }
 

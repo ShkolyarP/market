@@ -5,9 +5,9 @@ import com.paltvlad.market.api.ProductDto;
 import com.paltvlad.market.api.ResourceNotFoundException;
 import com.paltvlad.market.core.converters.ProductConverter;
 
+import com.paltvlad.market.core.entities.Product;
 import com.paltvlad.market.core.repositories.ProductRepository;
 import com.paltvlad.market.core.repositories.specifications.ProductsSpecifications;
-import com.paltvlad.market.core.soap.products.Product;
 import com.paltvlad.market.core.validators.ProductValidator;
 
 import lombok.RequiredArgsConstructor;
@@ -17,10 +17,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+
 
 
 @Service
@@ -51,18 +51,18 @@ public class ProductService {
 
 
     @Transactional
-    public void saveNewProduct(String title, double price) {
+    public void saveNewProduct(String title, BigDecimal price) {
         com.paltvlad.market.core.entities.Product product = new com.paltvlad.market.core.entities.Product();
         product.setTitle(title);
         product.setPrice(price);
 
-        if (product.getPrice() <= 0) {
+        if (product.getPrice().compareTo(BigDecimal.valueOf(0)) <= 0) {
             return;
         }
         productRepository.save(product);
     }
 
-    public Optional<com.paltvlad.market.core.entities.Product> findById(Long id) {
+    public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
     }
 
@@ -70,25 +70,14 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public List<com.paltvlad.market.core.entities.Product> getALlProducts() {
+    public List<Product> getALlProducts() {
         return productRepository.findAll();
     }
 
-    public static final Function<com.paltvlad.market.core.entities.Product, Product> functionEntityToSoap = product -> {
-        Product p = new Product();
-        p.setId(product.getId());
-        p.setTitle(product.getTitle());
-        p.setPrice(product.getPrice());
-        p.setCategoryTitle(product.getCategory().getTitle());
-        return p;
-    };
-
-    public List<Product> getAllProductsSoap() {
-        return productRepository.findAll().stream().map(functionEntityToSoap).collect(Collectors.toList());
-    }
 
 
-    public com.paltvlad.market.core.entities.Product createNewProduct(ProductDto productDto) {
+
+    public Product createNewProduct(ProductDto productDto) {
 
         productValidator.validate(productDto);
         com.paltvlad.market.core.entities.Product product = productConverter.dtoToEntity(productDto);
@@ -99,8 +88,8 @@ public class ProductService {
     }
 
     @Transactional
-    public com.paltvlad.market.core.entities.Product update(ProductDto productDto) {
-        com.paltvlad.market.core.entities.Product product = productRepository.findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Невозможно обновить продукт, не найден в базе, id: " + productDto.getId()));
+    public Product update(ProductDto productDto) {
+        Product product = productRepository.findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Невозможно обновить продукт, не найден в базе, id: " + productDto.getId()));
         product.setPrice(product.getPrice());
         product.setTitle(product.getTitle());
 

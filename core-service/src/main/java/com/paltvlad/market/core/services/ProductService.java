@@ -32,7 +32,7 @@ public class ProductService {
     private final ProductConverter productConverter;
 
 
-    public Page<com.paltvlad.market.core.entities.Product> findAll(Double minPrice, Double maxPrice, String partTitle, Integer page) {
+    public Page<com.paltvlad.market.core.entities.Product> findAll(BigDecimal minPrice, BigDecimal maxPrice, String partTitle, Integer page) {
 
         Specification<com.paltvlad.market.core.entities.Product> spec = Specification.where(null);
 
@@ -56,7 +56,7 @@ public class ProductService {
         product.setTitle(title);
         product.setPrice(price);
 
-        if (product.getPrice().compareTo(BigDecimal.valueOf(0)) <= 0) {
+        if (product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
             return;
         }
         productRepository.save(product);

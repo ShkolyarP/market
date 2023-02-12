@@ -12,7 +12,7 @@ import java.util.List;
 public class ProductValidator {
     public void validate(ProductDto productDto) {
         List<String> errors = new ArrayList<>();
-        if (productDto.getPrice().compareTo(BigDecimal.valueOf(0)) < 0) {
+        if (productDto.getPrice().compareTo(BigDecimal.ZERO) < 0) {
             errors.add("Цена продукта не может быть меньше 0");
         }
         if (productDto.getTitle().isBlank()) {

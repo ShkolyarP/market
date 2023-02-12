@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
@@ -27,8 +29,8 @@ public class ProductController {
     @GetMapping
     public Page<ProductDto> getAllProducts(
             @RequestParam(name = "p", defaultValue = "1") Integer page,
-            @RequestParam(name = "min_price", required = false) Double minPrice,
-            @RequestParam(name = "max_price", required = false) Double maxPrice,
+            @RequestParam(name = "min_price", required = false) BigDecimal minPrice,
+            @RequestParam(name = "max_price", required = false) BigDecimal maxPrice,
             @RequestParam(name = "title_part", required = false) String title_part
 
     ) {

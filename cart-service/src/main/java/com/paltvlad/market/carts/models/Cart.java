@@ -30,7 +30,7 @@ public class Cart {
     }
 
     public void recalculate() {
-        totalPrice = BigDecimal.valueOf(0);
+        totalPrice = BigDecimal.ZERO;
         for (CartItem item : items) {
             totalPrice = totalPrice.add(item.getPrice()).setScale(2, BigDecimal.ROUND_HALF_UP);
         }

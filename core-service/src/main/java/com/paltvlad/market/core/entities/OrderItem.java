@@ -1,12 +1,12 @@
 package com.paltvlad.market.core.entities;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -31,10 +31,10 @@ public class OrderItem {
     private int quantity;
 
     @Column(name = "price_per_product")
-    private double pricePerProduct;
+    private BigDecimal pricePerProduct;
 
     @Column(name = "price")
-    private double price;
+    private BigDecimal price;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -45,7 +45,7 @@ public class OrderItem {
     private LocalDateTime updatedAt;
 
 
-    public OrderItem(Product product, Order order, int quantity, double pricePerProduct, double price) {
+    public OrderItem(Product product, Order order, int quantity, BigDecimal pricePerProduct, BigDecimal price) {
         this.product = product;
         this.order = order;
         this.quantity = quantity;

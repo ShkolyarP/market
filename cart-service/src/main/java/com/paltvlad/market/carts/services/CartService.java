@@ -5,7 +5,7 @@ import com.paltvlad.market.api.ResourceNotFoundException;
 import com.paltvlad.market.carts.integrations.ProductServiceIntegration;
 import com.paltvlad.market.carts.models.Cart;
 import com.paltvlad.market.carts.models.CartItem;
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class CartService {
     }
 
     public void addToCard(Long id) {
-        ProductDto productDto = productServiceIntegration.getProductById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found, id: " + id));
+        ProductDto productDto = productServiceIntegration.getProductById(id);
 
         tempCart.addToCart(productDto);
 

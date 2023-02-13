@@ -2,7 +2,6 @@ package com.paltvlad.market.carts.controllers;
 
 import com.paltvlad.market.api.CartDto;
 import com.paltvlad.market.carts.converters.CartConverter;
-import com.paltvlad.market.carts.models.Cart;
 import com.paltvlad.market.carts.services.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/cart")
-@CrossOrigin("*")
 public class CartController {
 
     private final CartService cartService;

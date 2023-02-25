@@ -1,0 +1,46 @@
+<div>
+    <p></p>
+    <h3>Корзина</h3>
+    <p></p>
+
+    <h3>Корзина</h3>
+    <table class="table table-hover">
+        <thead class="table-dark">
+        <tr>
+            <td>ID</td>
+            <td>Наименование</td>
+            <td>Цена</td>
+            <td>Количество</td>
+            <td>Сумма</td>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in cart.items">
+            <td>{{item.productId}}</td>
+            <td>{{item.productTitle}}</td>
+            <td>{{item.pricePerProduct}}</td>
+            <td>
+                <button class="btn btn-secondary" ng-click="changeQuantity(item.productId, -1)">-</button>
+                {{item.quantity}}
+                <button class="btn btn-secondary" ng-click="changeQuantity(item.productId, 1)">+</button>
+                <button class="btn btn-danger" ng-click="deleteProduct(item.productId)">x</button>
+            </td>
+            <td>{{item.price}}</td>
+
+        </tr>
+        <tr>
+            <td>Итого</td>
+            <td></td>
+            <td></td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteAllFromCart()">Удалить все</button>
+                <p></p>
+                <button class="btn btn-danger" ng-click="createOrder()">Оформить заказ</button>
+            </td>
+            <td>{{cart.totalPrice}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

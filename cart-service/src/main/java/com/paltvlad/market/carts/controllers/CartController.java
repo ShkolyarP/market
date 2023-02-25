@@ -1,10 +1,13 @@
 package com.paltvlad.market.carts.controllers;
 
 import com.paltvlad.market.api.CartDto;
+import com.paltvlad.market.api.StringResponse;
 import com.paltvlad.market.carts.converters.CartConverter;
 import com.paltvlad.market.carts.services.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,31 +17,48 @@ public class CartController {
     private final CartService cartService;
     private final CartConverter cartConverter;
 
-    @GetMapping("/add/{id}")
-    public void addToCart(@PathVariable Long id) {
-        cartService.addToCard(id);
+    @GetMapping("/generate_uuid")
+    public StringResponse generateUuid(){
+        return new StringResponse(UUID.randomUUID().toString());
     }
 
-    @GetMapping
-    public CartDto getCurrentCart(){
-        return cartConverter.modelToDto(cartService.getCurrentCart());
+    @GetMapping("/{uuid}/add/{id}")
+    public void addToCart(@RequestHeader(name = "username", required = false) String username, @PathVariable String uuid, @PathVariable Long id) {
+        String targetUuid = getCartUuid(username, uuid);
+        cartService.addToCard(targetUuid, id);
     }
 
-    @GetMapping("/remove/{id}")
-    public void deleteById(@PathVariable Long id) {
-
-        cartService.deleteById(id);
+    @GetMapping("/{uuid}")
+    public CartDto getCurrentCart(@RequestHeader(name = "username", required = false) String username, @PathVariable String uuid) {
+        String targetUuid = getCartUuid(username, uuid);
+        return cartConverter.modelToDto(cartService.getCurrentCart(targetUuid));
     }
 
-    @GetMapping("/clear")
-    public void clearCart() {
-
-        cartService.deleteAllFromCart();
+    @GetMapping("/{uuid}/remove/{id}")
+    public void deleteById(@RequestHeader(name = "username", required = false) String username, @PathVariable String uuid, @PathVariable Long id) {
+        String targetUuid = getCartUuid(username, uuid);
+        cartService.deleteById(targetUuid, id);
     }
 
-    @GetMapping("/change_quantity")
-    public void changePrice(@RequestParam Long productId, @RequestParam Integer delta) {
-
-        cartService.changeQuantity(productId, delta);
+    @GetMapping("/{uuid}/clear")
+    public void clearCart(@RequestHeader(name = "username", required = false) String username, @PathVariable String uuid) {
+        String targetUuid = getCartUuid(username, uuid);
+        cartService.deleteAllFromCart(targetUuid);
     }
+
+    @GetMapping("/{uuid}/change_quantity")
+    public void changePrice(@RequestHeader(name = "username", required = false) String username, @PathVariable String uuid, @RequestParam Long productId, @RequestParam Integer delta) {
+        String targetUuid = getCartUuid(username, uuid);
+        cartService.changeQuantity(targetUuid, productId, delta);
+    }
+
+    private String getCartUuid(String username, String uuid) {
+
+        if (username != null) {
+            return username;
+        }
+        return uuid;
+    }
+
+
 }

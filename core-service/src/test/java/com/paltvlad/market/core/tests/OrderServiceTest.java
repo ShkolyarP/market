@@ -40,6 +40,7 @@ public class OrderServiceTest {
         CartDto cartDto = new CartDto();
         List<CartItemDto>items = new ArrayList<>();
         CartItemDto cartItemDto = new CartItemDto();
+
         cartItemDto.setProductTitle("Bread");
         cartItemDto.setPricePerProduct(BigDecimal.valueOf(120));
         cartItemDto.setQuantity(2);
@@ -48,7 +49,7 @@ public class OrderServiceTest {
         cartDto.setTotalPrice(BigDecimal.valueOf(240));
         cartDto.setItems(List.of(cartItemDto));
 
-        Mockito.doReturn(cartDto).when(cartServiceIntegration).getCurrentCart();
+        Mockito.doReturn(cartDto).when(cartServiceIntegration).getCurrentCart(null);
 
         Category category = new Category();
         category.setId(1L);

@@ -18,7 +18,7 @@ public class CartController {
     private final CartConverter cartConverter;
 
     @GetMapping("/generate_uuid")
-    public StringResponse generateUuid(){
+    public StringResponse generateUuid() {
         return new StringResponse(UUID.randomUUID().toString());
     }
 
@@ -44,6 +44,11 @@ public class CartController {
     public void clearCart(@RequestHeader(name = "username", required = false) String username, @PathVariable String uuid) {
         String targetUuid = getCartUuid(username, uuid);
         cartService.deleteAllFromCart(targetUuid);
+    }
+
+    @GetMapping("/{uuid}/merge")
+    public void mergeCart(@RequestHeader(name = "username", required = false) String username, @PathVariable String uuid) {
+        cartService.mergeCart(uuid, username);
     }
 
     @GetMapping("/{uuid}/change_quantity")

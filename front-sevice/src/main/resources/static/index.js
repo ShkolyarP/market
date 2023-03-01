@@ -18,10 +18,14 @@
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
             })
-            // .when('/orders', {
-            //     templateUrl: 'orders/orders.html',
-            //     controller: 'ordersController'
-            // })
+            .when('/orders', {
+                templateUrl: 'orders/orders.html',
+                controller: 'ordersController'
+            })
+            .when('/registration', {
+                templateUrl: 'registration/registration.html',
+                controller: 'registrationController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -63,13 +67,14 @@ angular.module('market').controller('indexController', function ($scope, $http, 
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                     $localStorage.marketUser = {username: $scope.user.username, token: response.data.token}
 
+                    $http.get('http://localhost:5555/cart/api/v1/cart/' + $localStorage.marketGuestCartId + '/merge', $scope.user)
+                        .then(function (response) {
+
+                        });
+
                     $scope.user.username = null;
                     $scope.user.password = null;
-                    //
-                    // $http.get(contextPath + '/cart/' + $localStorage.springWebGuestCartId + '/merge')
-                    //     .then(function successCallback(response) {
-                    //     });
-                    //
+
                     $location.path('/');
                 }
             }, function errorCallback(response) {
@@ -80,6 +85,7 @@ angular.module('market').controller('indexController', function ($scope, $http, 
         $scope.clearUser();
         $scope.user = null;
         $location.path('/');
+
     };
 
     $scope.clearUser = function () {

@@ -1,0 +1,33 @@
+<div>
+    <p></p>
+    <h3>Регистрация</h3>
+    <p></p>
+
+    <form novalidate class="was-validated row" ng-submit="functionRegistration()">
+        <div class="mb-3 col">
+            <label for="login" class="form-label">Логин</label>
+            <input type="text" class="form-control" id="login" value="" required="" placeholder="Логин"
+                   ng-model="regUser.username">
+        </div>
+        <div class="mb-3 col">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" value="" required="" placeholder="email"
+                   ng-model="regUser.email">
+        </div>
+        <div class="mb-3 col">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="password" value="" required="" placeholder="Пароль"
+                   ng-model="regUser.password">
+        </div>
+        <div class="mb-3 col">
+            <label for="confirmPassword" class="form-label">Подтверждение пароля</label>
+            <input type="password" class="form-control" id="confirmPassword" value="" required="" placeholder="Подтверждение пароля"
+                   ng-model="regUser.confirmPassword">
+        </div>
+
+        <div class="mb-3">
+            <button class="btn btn-primary" type="submit">Регистрация</button>
+        </div>
+    </form>
+
+</div>

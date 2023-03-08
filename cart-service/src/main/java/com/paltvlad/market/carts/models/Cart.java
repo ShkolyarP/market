@@ -25,9 +25,6 @@ public class Cart {
     }
 
 
-    public List<CartItem> getItems() {
-        return Collections.unmodifiableList(items);
-    }
 
     public void recalculate() {
         totalPrice = BigDecimal.ZERO;
@@ -68,5 +65,9 @@ public class Cart {
     public void clearCart() {
         items.clear();
         recalculate();
+    }
+
+    public void addItem(CartItem cartItem) {
+        items.add(cartItem);
     }
 }

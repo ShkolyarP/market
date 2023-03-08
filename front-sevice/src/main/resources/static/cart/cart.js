@@ -44,5 +44,5 @@ angular.module('market').controller('cartController', function ($scope, $http, $
                 $scope.loadCart();
             });
     }
-
+    $scope.loadCart();
 });

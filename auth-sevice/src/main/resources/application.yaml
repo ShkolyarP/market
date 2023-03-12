@@ -3,6 +3,12 @@ server:
   servlet:
     context-path: /market-auth
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/master
+          jwk-set-uri: http://localhost:8080/realms/master/protocol/openid-connect-certs
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:market-auth;MODE=PostgreSQL

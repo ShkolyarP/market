@@ -1,20 +1,22 @@
 package com.paltvlad.market.api;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
 
-
+@Schema(description = "Модель продукта")
 public class ProductDto {
 
-
+    @Schema(description = "ID продукта", required = true, example = "12")
     private Long id;
-
+    @Schema(description = "Название продукта", required = true, maxLength = 255, minLength = 3, example = "Bread")
     private String title;
-
+    @Schema(description = "Цена продукта", required = true, example = "12.00")
     private BigDecimal price;
-
+    @Schema(description = "Категория продукта", required = true, example = "food")
     private String categoryTitle;
 
     public ProductDto(Long id, String title, BigDecimal price, String categoryTitle) {
